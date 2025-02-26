@@ -21,3 +21,5 @@ interface DataDao {
     @Delete
     suspend fun delete(data: DataEntity)
 }
+
+
