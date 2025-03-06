@@ -5,7 +5,6 @@ import androidx.room.*
 
 @Dao
 interface DataDao {
-
     @Insert
     suspend fun insert(data: DataEntity)
 
@@ -20,6 +19,18 @@ interface DataDao {
 
     @Delete
     suspend fun delete(data: DataEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(user: UserDataEntity)
+
+    @Query("SELECT * FROM user_table WHERE id_user = :id LIMIT 1")
+    fun getUserById(id: Int): LiveData<UserDataEntity>
+
+    @Query("SELECT * FROM user_table WHERE id_user = :id LIMIT 1")
+    suspend fun getUserByIdSync(id: Int): UserDataEntity?
+
+    @Update
+    suspend fun updateUser(user: UserDataEntity)
 }
 
 
