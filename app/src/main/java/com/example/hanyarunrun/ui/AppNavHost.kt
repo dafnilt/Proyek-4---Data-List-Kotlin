@@ -9,11 +9,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.hanyarunrun.viewmodel.DataViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.hanyarunrun.viewmodel.ProfileViewModel
 
 @Composable
-fun AppNavHost(viewModel: DataViewModel) {
-    val navController = rememberNavController()
+fun AppNavHost(
+    navController: NavHostController,
+    viewModel: DataViewModel,
+    profileViewModel: ProfileViewModel)
+{
 
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
@@ -28,6 +33,9 @@ fun AppNavHost(viewModel: DataViewModel) {
         }
         composable("list") {
             DataListScreen(navController = navController, viewModel = viewModel)
+        }
+        composable("profile") {
+            ProfileScreen(navController = navController, viewModel = profileViewModel)
         }
         composable(
             route = "edit/{id}",

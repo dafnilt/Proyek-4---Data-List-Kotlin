@@ -46,87 +46,95 @@ fun EditScreen(
         }
     }
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column(
+
+    Scaffold(
+        bottomBar = { AnimatedBottomBar(navController, currentRoute = "edit") }
+    ) { paddingValues ->
+        Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(paddingValues),
+            color = MaterialTheme.colorScheme.background
         ) {
-            Text(
-                text = "Edit Data",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
-            )
-            OutlinedTextField(
-                value = kodeProvinsi,
-                onValueChange = { kodeProvinsi = it },
-                label = { Text("Kode Provinsi") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = namaProvinsi,
-                onValueChange = { namaProvinsi = it },
-                label = { Text("Nama Provinsi") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = kodeKabupatenKota,
-                onValueChange = { kodeKabupatenKota = it },
-                label = { Text("Kode Kabupaten/Kota") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = namaKabupatenKota,
-                onValueChange = { namaKabupatenKota = it },
-                label = { Text("Nama Kabupaten/Kota") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = total,
-                onValueChange = { total = it },
-                label = { Text("Total") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = satuan,
-                onValueChange = { satuan = it },
-                label = { Text("Satuan") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = tahun,
-                onValueChange = { tahun = it },
-                label = { Text("Tahun") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            Button(
-                onClick = {
-                    val updatedData = DataEntity(
-                        id = dataId,
-                        kodeProvinsi = kodeProvinsi,
-                        namaProvinsi = namaProvinsi,
-                        kodeKabupatenKota = kodeKabupatenKota,
-                        namaKabupatenKota = namaKabupatenKota,
-                        total = total.toDoubleOrNull() ?: 0.0,
-                        satuan = satuan,
-                        tahun = tahun.toIntOrNull() ?: 0
-                    )
-                    viewModel.updateData(updatedData)
-                    Toast.makeText(context, "Data berhasil diupdate!", Toast.LENGTH_SHORT).show()
-                    navController.popBackStack()
-                },
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text(text = "Update Data")
+                Text(
+                    text = "Edit Data",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                OutlinedTextField(
+                    value = kodeProvinsi,
+                    onValueChange = { kodeProvinsi = it },
+                    label = { Text("Kode Provinsi") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = namaProvinsi,
+                    onValueChange = { namaProvinsi = it },
+                    label = { Text("Nama Provinsi") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = kodeKabupatenKota,
+                    onValueChange = { kodeKabupatenKota = it },
+                    label = { Text("Kode Kabupaten/Kota") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = namaKabupatenKota,
+                    onValueChange = { namaKabupatenKota = it },
+                    label = { Text("Nama Kabupaten/Kota") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = total,
+                    onValueChange = { total = it },
+                    label = { Text("Total") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = satuan,
+                    onValueChange = { satuan = it },
+                    label = { Text("Satuan") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = tahun,
+                    onValueChange = { tahun = it },
+                    label = { Text("Tahun") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(24.dp))
+                Button(
+                    onClick = {
+                        val updatedData = DataEntity(
+                            id = dataId,
+                            kodeProvinsi = kodeProvinsi,
+                            namaProvinsi = namaProvinsi,
+                            kodeKabupatenKota = kodeKabupatenKota,
+                            namaKabupatenKota = namaKabupatenKota,
+                            total = total.toDoubleOrNull() ?: 0.0,
+                            satuan = satuan,
+                            tahun = tahun.toIntOrNull() ?: 0
+                        )
+                        viewModel.updateData(updatedData)
+                        Toast.makeText(context, "Data berhasil diupdate!", Toast.LENGTH_SHORT)
+                            .show()
+                        navController.popBackStack()
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Update Data")
+                }
             }
         }
     }
