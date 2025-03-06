@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.hanyarunrun.viewmodel.DataViewModel
@@ -44,7 +46,7 @@ fun DataEntryScreen(navController: NavHostController, viewModel: DataViewModel) 
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(16.dp),
+                    .padding(12.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
@@ -54,44 +56,51 @@ fun DataEntryScreen(navController: NavHostController, viewModel: DataViewModel) 
                 OutlinedTextField(
                     value = kodeProvinsi,
                     onValueChange = { kodeProvinsi = it },
-                    label = { Text("Kode Provinsi") },
+                    label = { Text("Kode Provinsi", fontSize = 12.sp) },
+                    textStyle = TextStyle(fontSize = 14.sp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = namaProvinsi,
                     onValueChange = { namaProvinsi = it },
-                    label = { Text("Nama Provinsi") },
+                    label = { Text("Nama Provinsi", fontSize = 12.sp) },
+                    textStyle = TextStyle(fontSize = 14.sp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = kodeKabupatenKota,
                     onValueChange = { kodeKabupatenKota = it },
-                    label = { Text("Kode Kabupaten/Kota") },
+                    label = { Text("Kode Kabupaten/Kota", fontSize = 12.sp) },
+                    textStyle = TextStyle(fontSize = 14.sp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = namaKabupatenKota,
                     onValueChange = { namaKabupatenKota = it },
-                    label = { Text("Nama Kabupaten/Kota") },
+                    label = { Text("Nama Kabupaten/Kota", fontSize = 12.sp) },
+                    textStyle = TextStyle(fontSize = 14.sp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = total,
                     onValueChange = { total = it },
-                    label = { Text("Total") },
+                    label = { Text("Total", fontSize = 12.sp) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    textStyle = TextStyle(fontSize = 14.sp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = satuan,
                     onValueChange = { satuan = it },
-                    label = { Text("Satuan") },
+                    label = { Text("Satuan", fontSize = 12.sp) },
+                    textStyle = TextStyle(fontSize = 14.sp),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = tahun,
                     onValueChange = { tahun = it },
-                    label = { Text("Tahun") },
+                    label = { Text("Tahun", fontSize = 12.sp) },
+                    textStyle = TextStyle(fontSize = 14.sp),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
                 )

@@ -1,5 +1,6 @@
 package com.example.hanyarunrun.ui
 
+import android.widget.Button
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -7,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.with
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,6 +33,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.hanyarunrun.data.DataEntity
@@ -48,37 +52,69 @@ fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
     Scaffold(
         bottomBar = {
             AnimatedBottomBar(navController, currentRoute)
-        }
+        },
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
-            Text(
-                text = "List Data",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(16.dp)
-            )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFecfffd))
+                .padding(paddingValues) // Pastikan padding diterapkan ke seluruh Box
+        ) {
+            // Canvas untuk background lingkaran
+            Canvas(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                drawCircle(
+                    color = Color(0xFF80CBC4), // Warna yang benar dalam format 0x
+                    radius = 800f,
+                    center = Offset(size.width * 0.5f, size.height * 0.01f) // Posisi lingkaran
+                )
+            }
 
-            AnimatedContent(
-                targetState = dataList.isEmpty(),
-                transitionSpec = {
-                    fadeIn(animationSpec = tween(300)) with fadeOut(animationSpec = tween(300))
-                },
-                label = "DataListAnimation"
-            ) { isEmpty ->
-                if (isEmpty) {
-                    EmptyDataView()
-                } else {
-                    DataListView(navController, dataList, viewModel)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(20.dp) // Padding untuk konten
+            ) {
+                Spacer(modifier = Modifier.height(22.dp))
+                Text(
+                    text = "Selamat Pagi!",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White // Ubah warna teks menjadi putih
+                )
+                Text(
+                    text = "Dafni Lanahtadya",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.White // Ubah warna teks menjadi putih
+                )
+
+                Spacer(modifier = Modifier.height(22.dp)) // Memberikan jarak setelah teks
+
+                // Efek animasi saat data kosong atau tersedia
+                AnimatedContent(
+                    targetState = dataList.isEmpty(),
+                    transitionSpec = {
+                        fadeIn(animationSpec = tween(300)) with fadeOut(animationSpec = tween(300))
+                    },
+                    label = "DataListAnimation"
+                ) { isEmpty ->
+                    if (isEmpty) {
+                        EmptyDataView()
+                    } else {
+                        DataListView(navController, dataList, viewModel)
+                    }
                 }
             }
         }
     }
 }
 
+
 @Composable
 fun AnimatedBottomBar(navController: NavHostController, currentRoute: String) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.primary
+        containerColor = Color.White, // Latar belakang putih
+        contentColor = Color.Gray // Warna default teks dan ikon
     ) {
         val items = listOf(
             BottomNavItem("Home", Icons.Default.Home, "list"),
@@ -93,13 +129,16 @@ fun AnimatedBottomBar(navController: NavHostController, currentRoute: String) {
                         Icon(
                             imageVector = item.icon,
                             contentDescription = item.label,
-                            tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = if (selected) Color(0xFFFF9800) else Color.Gray // Oranye jika dipilih, abu-abu jika tidak
                         )
                     }
                 },
                 label = {
                     AnimatedVisibility(visible = isSelected) {
-                        Text(item.label)
+                        Text(
+                            text = item.label,
+                            color = if (isSelected) Color(0xFFFF9800) else Color.Gray // Oranye jika dipilih, abu-abu jika tidak
+                        )
                     }
                 },
                 selected = isSelected,
@@ -109,11 +148,19 @@ fun AnimatedBottomBar(navController: NavHostController, currentRoute: String) {
                         restoreState = true
                         launchSingleTop = true
                     }
-                }
+                },
+                colors = NavigationBarItemDefaults.colors( // Atur warna agar tidak ada efek ungu
+                    selectedIconColor = Color(0xFFFF9800), // Warna ikon saat dipilih
+                    unselectedIconColor = Color.Gray, // Warna ikon saat tidak dipilih
+                    selectedTextColor = Color(0xFFFF9800), // Warna teks saat dipilih
+                    unselectedTextColor = Color.Gray, // Warna teks saat tidak dipilih
+                    indicatorColor = Color.Transparent
+            )
             )
         }
     }
 }
+
 
 @Composable
 fun EmptyDataView() {
@@ -145,27 +192,27 @@ fun DataItemCard(navController: NavHostController, item: DataEntity, viewModel: 
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.background(MaterialTheme.colorScheme.surface).padding(16.dp)
+            modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
         ) {
             Text(
                 text = "Provinsi: ${item.namaProvinsi} (${item.kodeProvinsi})",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.labelLarge,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Kabupaten/Kota: ${item.namaKabupatenKota} (${item.kodeKabupatenKota})",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.labelLarge
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Total: ${item.total} ${item.satuan}",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.labelLarge
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Tahun: ${item.tahun}",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.labelLarge
             )
             Spacer(modifier = Modifier.height(8.dp))
             Row(
@@ -181,15 +228,13 @@ fun DataItemCard(navController: NavHostController, item: DataEntity, viewModel: 
                 ) {
                     Text(text = "Edit")
                 }
-                JetsnackTheme {
-                    JetsnackButton(
+                    Button(
                         onClick = {
                             viewModel.deleteData(item)
                         },
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(text = "Delete")
-                    }
                 }
             }
         }

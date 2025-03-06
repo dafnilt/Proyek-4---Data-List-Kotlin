@@ -26,54 +26,53 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 private val LightColorPalette = JetsnackColors(
-    brand = Shadow5,
-    brandSecondary = Ocean3,
-    uiBackground = Neutral0,
-    uiBorder = Neutral4,
-    uiFloated = FunctionalGrey,
-    textSecondary = Neutral7,
-    textHelp = Neutral6,
-    textInteractive = Neutral0,
-    textLink = Ocean11,
-    iconSecondary = Neutral7,
-    iconInteractive = Neutral0,
-    iconInteractiveInactive = Neutral1,
-    error = FunctionalRed,
-    gradient6_1 = listOf(Shadow4, Ocean3, Shadow2, Ocean3, Shadow4),
-    gradient6_2 = listOf(Rose4, Lavender3, Rose2, Lavender3, Rose4),
-    gradient3_1 = listOf(Shadow2, Ocean3, Shadow4),
-    gradient3_2 = listOf(Rose2, Lavender3, Rose4),
-    gradient2_1 = listOf(Shadow4, Shadow11),
-    gradient2_2 = listOf(Ocean3, Shadow3),
-    gradient2_3 = listOf(Lavender3, Rose2),
-    tornado1 = listOf(Shadow4, Ocean3),
+    brand = Color(0xFF0D47A1), // Biru tua
+    brandSecondary = Color(0xFF1976D2), // Biru sedang
+    uiBackground = Color(0xFFFFFFFF), // Putih
+    uiBorder = Color(0xFFBBDEFB), // Biru muda
+    uiFloated = Color(0xFF64B5F6), // Biru terang
+    textSecondary = Color(0xFF1565C0), // Biru gelap
+    textHelp = Color(0xFF2196F3), // Biru standar
+    textInteractive = Color(0xFF0D47A1), // Biru tua
+    textLink = Color(0xFF42A5F5), // Biru muda
+    iconSecondary = Color(0xFF1E88E5), // Biru cerah
+    iconInteractive = Color(0xFF0D47A1), // Biru tua
+    iconInteractiveInactive = Color(0xFFBBDEFB), // Biru pastel
+    error = Color(0xFFD32F2F), // Merah untuk error
+    gradient6_1 = listOf(Color(0xFF64B5F6), Color(0xFF1976D2), Color(0xFF0D47A1)), // Gradasi biru
+    gradient6_2 = listOf(Color(0xFF90CAF9), Color(0xFF42A5F5), Color(0xFF1E88E5)), // Gradasi biru muda
+    gradient3_1 = listOf(Color(0xFF0D47A1), Color(0xFF1976D2), Color(0xFF42A5F5)), // Gradasi biru sedang
+    gradient3_2 = listOf(Color(0xFF64B5F6), Color(0xFF90CAF9), Color(0xFFBBDEFB)), // Gradasi biru terang
+    gradient2_1 = listOf(Color(0xFF1976D2), Color(0xFF0D47A1)), // Gradasi biru tua
+    gradient2_2 = listOf(Color(0xFF42A5F5), Color(0xFF64B5F6)), // Gradasi biru muda
+    gradient2_3 = listOf(Color(0xFF90CAF9), Color(0xFFBBDEFB)), // Gradasi biru pastel
+    tornado1 = listOf(Color(0xFF0D47A1), Color(0xFF1976D2)), // Efek tornado biru
     isDark = false
 )
 
+
 private val DarkColorPalette = JetsnackColors(
-    brand = Shadow1,
-    brandSecondary = Ocean2,
-    uiBackground = Neutral8,
-    uiBorder = Neutral3,
-    uiFloated = FunctionalDarkGrey,
-    textPrimary = Shadow1,
-    textSecondary = Neutral0,
-    textHelp = Neutral1,
-    textInteractive = Neutral7,
-    textLink = Ocean2,
-    iconPrimary = Shadow1,
-    iconSecondary = Neutral0,
-    iconInteractive = Neutral7,
-    iconInteractiveInactive = Neutral6,
-    error = FunctionalRedDark,
-    gradient6_1 = listOf(Shadow5, Ocean7, Shadow9, Ocean7, Shadow5),
-    gradient6_2 = listOf(Rose11, Lavender7, Rose8, Lavender7, Rose11),
-    gradient3_1 = listOf(Shadow9, Ocean7, Shadow5),
-    gradient3_2 = listOf(Rose8, Lavender7, Rose11),
-    gradient2_1 = listOf(Ocean3, Shadow3),
-    gradient2_2 = listOf(Ocean4, Shadow2),
-    gradient2_3 = listOf(Lavender3, Rose3),
-    tornado1 = listOf(Shadow4, Ocean3),
+    brand = Color(0xFF0D47A1), // Biru tua
+    brandSecondary = Color(0xFF1976D2), // Biru sedang
+    uiBackground = Color(0xFFFFFFFF), // Putih
+    uiBorder = Color(0xFFBBDEFB), // Biru muda
+    uiFloated = Color(0xFF64B5F6), // Biru terang
+    textSecondary = Color(0xFF1565C0), // Biru gelap
+    textHelp = Color(0xFF2196F3), // Biru standar
+    textInteractive = Color(0xFF0D47A1), // Biru tua
+    textLink = Color(0xFF42A5F5), // Biru muda
+    iconSecondary = Color(0xFF1E88E5), // Biru cerah
+    iconInteractive = Color(0xFF0D47A1), // Biru tua
+    iconInteractiveInactive = Color(0xFFBBDEFB), // Biru pastel
+    error = Color(0xFFD32F2F), // Merah untuk error
+    gradient6_1 = listOf(Color(0xFF64B5F6), Color(0xFF1976D2), Color(0xFF0D47A1)), // Gradasi biru
+    gradient6_2 = listOf(Color(0xFF90CAF9), Color(0xFF42A5F5), Color(0xFF1E88E5)), // Gradasi biru muda
+    gradient3_1 = listOf(Color(0xFF0D47A1), Color(0xFF1976D2), Color(0xFF42A5F5)), // Gradasi biru sedang
+    gradient3_2 = listOf(Color(0xFF64B5F6), Color(0xFF90CAF9), Color(0xFFBBDEFB)), // Gradasi biru terang
+    gradient2_1 = listOf(Color(0xFF1976D2), Color(0xFF0D47A1)), // Gradasi biru tua
+    gradient2_2 = listOf(Color(0xFF42A5F5), Color(0xFF64B5F6)), // Gradasi biru muda
+    gradient2_3 = listOf(Color(0xFF90CAF9), Color(0xFFBBDEFB)), // Gradasi biru pastel
+    tornado1 = listOf(Color(0xFF0D47A1), Color(0xFF1976D2)), // Efek tornado biru
     isDark = true
 )
 
@@ -105,35 +104,36 @@ object JetsnackTheme {
  */
 @Immutable
 data class JetsnackColors(
-    val gradient6_1: List<Color>,
-    val gradient6_2: List<Color>,
-    val gradient3_1: List<Color>,
-    val gradient3_2: List<Color>,
-    val gradient2_1: List<Color>,
-    val gradient2_2: List<Color>,
-    val gradient2_3: List<Color>,
-    val brand: Color,
-    val brandSecondary: Color,
-    val uiBackground: Color,
-    val uiBorder: Color,
-    val uiFloated: Color,
+    val gradient6_1: List<Color> = listOf(Color(0xFF6200EA), Color(0xFF3700B3)),
+    val gradient6_2: List<Color> = listOf(Color(0xFF03DAC5), Color(0xFF018786)),
+    val gradient3_1: List<Color> = listOf(Color(0xFFFF5722), Color(0xFFF4511E), Color(0xFFE64A19)),
+    val gradient3_2: List<Color> = listOf(Color(0xFF4CAF50), Color(0xFF388E3C), Color(0xFF2E7D32)),
+    val gradient2_1: List<Color> = listOf(Color(0xFFBB86FC), Color(0xFF3700B3)),
+    val gradient2_2: List<Color> = listOf(Color(0xFF03DAC5), Color(0xFF018786)),
+    val gradient2_3: List<Color> = listOf(Color(0xFFFFC107), Color(0xFFFF9800)),
+    val brand: Color = Color(0xFFFF5722),
+    val brandSecondary: Color = Color(0xFF4CAF50),
+    val uiBackground: Color = Color(0xFF121212),
+    val uiBorder: Color = Color(0xFF757575),
+    val uiFloated: Color = Color(0xFF1E1E1E),
     val interactivePrimary: List<Color> = gradient2_1,
     val interactiveSecondary: List<Color> = gradient2_2,
     val interactiveMask: List<Color> = gradient6_1,
     val textPrimary: Color = brand,
-    val textSecondary: Color,
-    val textHelp: Color,
-    val textInteractive: Color,
-    val textLink: Color,
-    val tornado1: List<Color>,
+    val textSecondary: Color = Color(0xFFB0BEC5),
+    val textHelp: Color = Color(0xFF90A4AE),
+    val textInteractive: Color = Color(0xFF03DAC5),
+    val textLink: Color = Color(0xFFBB86FC),
+    val tornado1: List<Color> = listOf(Color(0xFFFFEB3B), Color(0xFFFFC107), Color(0xFFFF9800)),
     val iconPrimary: Color = brand,
-    val iconSecondary: Color,
-    val iconInteractive: Color,
-    val iconInteractiveInactive: Color,
-    val error: Color,
+    val iconSecondary: Color = Color(0xFF90A4AE),
+    val iconInteractive: Color = Color(0xFF03DAC5),
+    val iconInteractiveInactive: Color = Color(0xFF757575),
+    val error: Color = Color(0xFFB00020),
     val notificationBadge: Color = error,
-    val isDark: Boolean
+    val isDark: Boolean = true
 )
+
 
 @Composable
 fun ProvideJetsnackColors(
