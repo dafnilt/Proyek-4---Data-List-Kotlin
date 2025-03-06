@@ -24,6 +24,9 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import com.example.hanyarunrun.ui.components.JetsnackButton
+import com.example.hanyarunrun.ui.themejetsnack.JetsnackTheme
+data class BottomNavItem(val label: String, val icon: ImageVector, val route: String)
 
 @Composable
 fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
@@ -37,7 +40,6 @@ fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
                     BottomNavItem("Tambah Data", Icons.Default.Add, "form"),
                     BottomNavItem("Profile", Icons.Default.Person, "profile")
                 )
-
                 items.forEach { item ->
                     NavigationBarItem(
                         icon = { Icon(item.icon, contentDescription = item.label) },
@@ -111,13 +113,15 @@ fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
                                     ) {
                                         Text(text = "Edit")
                                     }
-                                    Button(
-                                        onClick = {
-                                            viewModel.deleteData(item)
-                                        },
-                                        shape = RoundedCornerShape(8.dp)
-                                    ) {
-                                        Text(text = "Delete")
+                                    JetsnackTheme{
+                                        JetsnackButton(
+                                            onClick = {
+                                                viewModel.deleteData(item)
+                                            },
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Delete")
+                                        }
                                     }
                                 }
                             }
@@ -129,4 +133,4 @@ fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
     }
 }
 
-data class BottomNavItem(val label: String, val icon: ImageVector, val route: String)
+
