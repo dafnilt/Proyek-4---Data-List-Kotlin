@@ -37,6 +37,9 @@ fun AppNavHost(
         composable("profile") {
             ProfileScreen(navController = navController, viewModel = profileViewModel)
         }
+        composable("rata_rata_lama_sekolah") {
+            RataRataLamaSekolahScreen()
+        }
         composable(
             route = "edit/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })

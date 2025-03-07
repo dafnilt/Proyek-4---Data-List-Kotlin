@@ -118,7 +118,7 @@ fun AnimatedBottomBar(navController: NavHostController, currentRoute: String) {
     ) {
         val items = listOf(
             BottomNavItem("Home", Icons.Default.Home, "list"),
-            BottomNavItem("Tambah Data", Icons.Default.Add, "form"),
+            BottomNavItem("Tambah Data", Icons.Default.Add, "rata_rata_lama_sekolah"),
             BottomNavItem("Profile", Icons.Default.Person, "profile")
         )
         items.forEach { item ->
