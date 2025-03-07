@@ -1,6 +1,5 @@
 package com.example.hanyarunrun.ui
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,18 +12,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.hanyarunrun.viewmodel.JabarViewModel
+import com.example.hanyarunrun.viewmodel.ProfileViewModel
 
 @Composable
-fun RataRataLamaSekolahScreen(
-    viewModel: JabarViewModel = viewModel()
+fun IndeksPendidikanScreen(
+    navController: NavHostController,
+    viewModel: JabarViewModel,
 ) {
-    val dataSekolah by viewModel.dataSekolah.observeAsState(emptyList())
+    val dataIndeks by viewModel.dataIndeks.observeAsState(emptyList())
     val isLoading by viewModel.loading.observeAsState(false)
     val error by viewModel.error.observeAsState("")
 
     LaunchedEffect(Unit) {
-        viewModel.fetchDataSekolah()
+        viewModel.fetchDataIndeks()
     }
 
     Column(
@@ -33,7 +35,7 @@ fun RataRataLamaSekolahScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Rata-Rata Lama Sekolah Berdasarkan Kabupaten/Kota",
+            text = "Indeks Pendidikan Berdasarkan Kabupaten/Kota",
             style = MaterialTheme.typography.headlineSmall
         )
 
@@ -43,15 +45,9 @@ fun RataRataLamaSekolahScreen(
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-        } else if (error.isNotEmpty()) {
-            Text(
-                text = error,
-                color = Color.Red,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
         } else {
             LazyColumn {
-                items(dataSekolah) { item ->
+                items(dataIndeks) { item ->
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -73,7 +69,7 @@ fun RataRataLamaSekolahScreen(
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "Rata-rata Lama Sekolah: ${item.rata_rata_lama_sekolah} ${item.satuan}",
+                                text = "Indeks Pendidikan: ${item.indeks_pendidikan} ${item.satuan}",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             Spacer(modifier = Modifier.height(4.dp))

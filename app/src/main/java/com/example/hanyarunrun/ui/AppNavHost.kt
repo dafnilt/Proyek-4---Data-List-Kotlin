@@ -11,13 +11,16 @@ import com.example.hanyarunrun.viewmodel.DataViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.hanyarunrun.viewmodel.JabarViewModel
 import com.example.hanyarunrun.viewmodel.ProfileViewModel
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
     viewModel: DataViewModel,
-    profileViewModel: ProfileViewModel)
+    profileViewModel: ProfileViewModel,
+    indeksViewModel: JabarViewModel
+)
 {
 
     NavHost(navController = navController, startDestination = "splash") {
@@ -37,8 +40,8 @@ fun AppNavHost(
         composable("profile") {
             ProfileScreen(navController = navController, viewModel = profileViewModel)
         }
-        composable("rata_rata_lama_sekolah") {
-            RataRataLamaSekolahScreen()
+        composable("indeks") {
+            IndeksPendidikanScreen(navController = navController, viewModel = indeksViewModel)
         }
         composable(
             route = "edit/{id}",
