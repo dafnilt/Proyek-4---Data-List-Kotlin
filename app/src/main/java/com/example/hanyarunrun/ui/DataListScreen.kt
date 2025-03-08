@@ -40,6 +40,9 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -234,6 +237,8 @@ fun DataListView(navController: NavHostController, dataList: List<DataEntity>, v
 
 @Composable
 fun DataItemCard(navController: NavHostController, item: DataEntity, viewModel: DataViewModel) {
+    var showDialog by remember { mutableStateOf(false) }
+
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -294,7 +299,7 @@ fun DataItemCard(navController: NavHostController, item: DataEntity, viewModel: 
                         tint = Color(0xFFFFB433)
                     )
                 }
-                IconButton(onClick = { viewModel.deleteData(item) }) {
+                IconButton(onClick = { showDialog = true }) {
                     Icon(
                         imageVector = Icons.Outlined.Delete,
                         contentDescription = "Hapus Data",
@@ -303,6 +308,28 @@ fun DataItemCard(navController: NavHostController, item: DataEntity, viewModel: 
                 }
             }
         }
+    }
+
+    // Dialog Konfirmasi Hapus
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Konfirmasi Hapus") },
+            text = { Text("Apakah Anda yakin ingin menghapus data ini?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.deleteData(item)
+                    showDialog = false
+                }) {
+                    Text("Ya", color = Color.Red)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Batal")
+                }
+            }
+        )
     }
 }
 
