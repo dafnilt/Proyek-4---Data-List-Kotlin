@@ -34,9 +34,9 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
             val defaultUser = UserDataEntity(
                 id_user = 1,
-                nama = "Mahasiswa JTK",
-                nim = "22222",
-                email = "mahasiswa@jtk.polban.ac.id",
+                nama = "Belum edit profil",
+                nim = "-",
+                email = "-",
                 profileImg = defaultByteArray
             )
             userDao.insertUser(defaultUser)

@@ -34,13 +34,10 @@ fun DataEntryScreen(navController: NavHostController, viewModel: DataViewModel) 
     var tahun by remember { mutableStateOf("") }
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route ?: ""
 
-    Scaffold(
-        bottomBar = { AnimatedBottomBar(navController, currentRoute) } // Menambahkan Navbar
-    ) { paddingValues ->
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues), // Menyesuaikan padding agar tidak tertutup navbar
+                .padding(16.dp), // Menyesuaikan padding agar tidak tertutup navbar
             color = MaterialTheme.colorScheme.background
         ) {
             Column(
@@ -127,4 +124,4 @@ fun DataEntryScreen(navController: NavHostController, viewModel: DataViewModel) 
             }
         }
     }
-}
+

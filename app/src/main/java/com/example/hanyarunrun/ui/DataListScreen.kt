@@ -25,9 +25,16 @@ import androidx.navigation.NavHostController
 import androidx.compose.runtime.livedata.observeAsState
 import com.example.hanyarunrun.viewmodel.DataViewModel
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -46,6 +53,7 @@ data class BottomNavItem(val label: String, val icon: ImageVector, val route: St
 @Composable
 fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
     val dataList by viewModel.dataList.observeAsState(emptyList())
+    val totalData = dataList.size // Menghitung jumlah total data
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: "home"
 
@@ -53,44 +61,83 @@ fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
         bottomBar = {
             AnimatedBottomBar(navController, currentRoute)
         },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { navController.navigate("form") },
+                containerColor = Color(0xFFFFB433),
+                contentColor = Color.White,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Tambah Data")
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
     ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFFecfffd))
-                .padding(paddingValues) // Pastikan padding diterapkan ke seluruh Box
+                .padding(paddingValues)
         ) {
-            // Canvas untuk background lingkaran
-            Canvas(
-                modifier = Modifier.fillMaxSize()
-            ) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
                 drawCircle(
-                    color = Color(0xFF80CBC4), // Warna yang benar dalam format 0x
+                    color = Color(0xFF80CBC4),
                     radius = 800f,
-                    center = Offset(size.width * 0.5f, size.height * 0.01f) // Posisi lingkaran
+                    center = Offset(size.width * 0.5f, size.height * 0.01f)
                 )
             }
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(20.dp) // Padding untuk konten
+                    .padding(20.dp)
             ) {
                 Spacer(modifier = Modifier.height(22.dp))
                 Text(
                     text = "Selamat Pagi!",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White // Ubah warna teks menjadi putih
+                    color = Color.White
                 )
                 Text(
                     text = "Dafni Lanahtadya",
                     style = MaterialTheme.typography.titleLarge,
-                    color = Color.White // Ubah warna teks menjadi putih
+                    color = Color.White
                 )
 
-                Spacer(modifier = Modifier.height(22.dp)) // Memberikan jarak setelah teks
+                Spacer(modifier = Modifier.height(22.dp))
 
-                // Efek animasi saat data kosong atau tersedia
+                // Tambahkan Card untuk menampilkan total data
+                Card(
+                    shape = RoundedCornerShape(12.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Total Data",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "$totalData",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFFFF9800) // Warna teks total data
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
                 AnimatedContent(
                     targetState = dataList.isEmpty(),
                     transitionSpec = {
@@ -110,6 +157,7 @@ fun DataListScreen(navController: NavHostController, viewModel: DataViewModel) {
 }
 
 
+
 @Composable
 fun AnimatedBottomBar(navController: NavHostController, currentRoute: String) {
     NavigationBar(
@@ -118,7 +166,7 @@ fun AnimatedBottomBar(navController: NavHostController, currentRoute: String) {
     ) {
         val items = listOf(
             BottomNavItem("Home", Icons.Default.Home, "list"),
-            BottomNavItem("Tambah Data", Icons.Default.Add, "indeks"),
+            BottomNavItem("Data", Icons.AutoMirrored.Filled.List, "indeks"),
             BottomNavItem("Profile", Icons.Default.Person, "profile")
         )
         items.forEach { item ->
@@ -188,53 +236,70 @@ fun DataListView(navController: NavHostController, dataList: List<DataEntity>, v
 fun DataItemCard(navController: NavHostController, item: DataEntity, viewModel: DataViewModel) {
     Card(
         shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        modifier = Modifier.fillMaxWidth()
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp, horizontal = 4.dp)
     ) {
-        Column(
-            modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Provinsi: ${item.namaProvinsi} (${item.kodeProvinsi})",
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold
+            // Ikon Data
+            Icon(
+                imageVector = Icons.Outlined.DateRange,
+                contentDescription = "Ikon Data",
+                tint = Color(0xFF00796B),
+                modifier = Modifier
+                    .size(48.dp)
+                    .padding(end = 12.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Kabupaten/Kota: ${item.namaKabupatenKota} (${item.kodeKabupatenKota})",
-                style = MaterialTheme.typography.labelLarge
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Total: ${item.total} ${item.satuan}",
-                style = MaterialTheme.typography.labelLarge
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Tahun: ${item.tahun}",
-                style = MaterialTheme.typography.labelLarge
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "${item.namaProvinsi} (${item.kodeProvinsi})",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "${item.namaKabupatenKota} (${item.kodeKabupatenKota})",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Total: ${item.total} ${item.satuan}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Tahun: ${item.tahun}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            // Tombol Edit & Delete dalam Column agar sejajar
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Button(
-                    onClick = {
-                        navController.navigate("edit/${item.id}")
-                    },
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(text = "Edit")
+                IconButton(onClick = { navController.navigate("edit/${item.id}") }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Edit,
+                        contentDescription = "Edit Data",
+                        tint = Color(0xFFFFB433)
+                    )
                 }
-                    Button(
-                        onClick = {
-                            viewModel.deleteData(item)
-                        },
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(text = "Delete")
+                IconButton(onClick = { viewModel.deleteData(item) }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Delete,
+                        contentDescription = "Hapus Data",
+                        tint = Color(0xFFD32F2F)
+                    )
                 }
             }
         }

@@ -46,14 +46,10 @@ fun EditScreen(
         }
     }
 
-
-    Scaffold(
-        bottomBar = { AnimatedBottomBar(navController, currentRoute = "edit") }
-    ) { paddingValues ->
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(16.dp),
             color = MaterialTheme.colorScheme.background
         ) {
             Column(
@@ -138,4 +134,4 @@ fun EditScreen(
             }
         }
     }
-}
+

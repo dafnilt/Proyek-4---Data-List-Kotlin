@@ -91,7 +91,7 @@ val Typography = Typography(
     ),
     bodyLarge = TextStyle(
         fontFamily = Karla,
-        fontSize = 16.sp,
+        fontSize = 24.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 28.sp,
         letterSpacing = 0.15.sp

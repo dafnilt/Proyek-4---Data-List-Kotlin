@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -20,10 +21,13 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.hanyarunrun.viewmodel.ProfileViewModel
@@ -61,21 +65,35 @@ fun ProfileScreen(
         }
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.TopCenter
-    ) {
+
+    Scaffold(
+        bottomBar = { AnimatedBottomBar(navController, currentRoute = "profile") } // Tambahkan bottom bar di dalam Scaffold
+    ) { paddingValues ->
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .background(Brush.verticalGradient(listOf(Color.White, Color(0xFFB4EBE6))))
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = "Profil",
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            // Box Foto Profil
             Box(
                 modifier = Modifier
-                    .size(120.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                    .background(Color.LightGray, CircleShape),
+                    .size(130.dp) // Lebih besar
+                    .border(
+                        4.dp,
+                        MaterialTheme.colorScheme.primary,
+                        CircleShape
+                    ) // Border lebih tebal
+                    .background(Color.LightGray, CircleShape)
+                    .shadow(8.dp, CircleShape), // Tambahkan shadow
                 contentAlignment = Alignment.Center
             ) {
                 tempProfileImg?.let {
@@ -83,7 +101,7 @@ fun ProfileScreen(
                         bitmap = it.asImageBitmap(),
                         contentDescription = "Profile Picture",
                         modifier = Modifier
-                            .size(120.dp)
+                            .size(130.dp)
                             .clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
@@ -91,9 +109,10 @@ fun ProfileScreen(
                     imageVector = Icons.Default.Person,
                     contentDescription = "Default Profile Picture",
                     tint = Color.Gray,
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(90.dp) // Ukuran lebih besar
                 )
             }
+
             Spacer(modifier = Modifier.height(16.dp))
 
             if (isEditing) {
@@ -101,7 +120,7 @@ fun ProfileScreen(
                     value = tempName,
                     onValueChange = { tempName = it },
                     label = { Text("Nama") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.85f) // Lebih kecil dari full width
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -109,7 +128,7 @@ fun ProfileScreen(
                     value = tempId,
                     onValueChange = { tempId = it },
                     label = { Text("NIM") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.85f)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -117,15 +136,18 @@ fun ProfileScreen(
                     value = tempEmail,
                     onValueChange = { tempEmail = it },
                     label = { Text("Email") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(0.85f)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
                     onClick = { imagePickerLauncher.launch("image/*") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .height(48.dp),
+                    shape = RoundedCornerShape(16.dp)
                 ) {
-                    Text("Upload Foto")
+                    Text("Upload Foto", fontWeight = FontWeight.Bold)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -137,26 +159,46 @@ fun ProfileScreen(
                             showToast(context, "Profil berhasil diperbarui")
                         }
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA726)),
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .height(48.dp),
+                    shape = RoundedCornerShape(16.dp),
                     enabled = tempProfileImg != null
                 ) {
-                    Text("Simpan")
+                    Text("Simpan", fontWeight = FontWeight.Bold)
                 }
             } else {
-                Text(text = user?.nama ?: "Mahasiswa JTK", style = MaterialTheme.typography.headlineSmall)
+                Text(
+                    text = user?.nama ?: "Belum edit Profil",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(text = "ID: ${user?.nim ?: "-"}", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = "${user?.nim ?: "-"}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Gray
+                )
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(text = user?.email ?: "-", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = user?.email ?: "-",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Gray
+                )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
                     onClick = { isEditing = true },
-                    modifier = Modifier.fillMaxWidth()
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA726)),
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .height(48.dp),
+                    shape = RoundedCornerShape(16.dp)
                 ) {
-                    Text("Edit Profil")
+                    Text("Edit Profil", fontWeight = FontWeight.Bold)
                 }
             }
         }
